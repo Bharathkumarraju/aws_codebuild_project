@@ -1,0 +1,13 @@
+version: 0.1
+phases:
+  install:
+    commands:
+      - aws cloudformation package --template-file StudentsSAM.yaml --output-template-file serverless-output.yaml --s3-bucket <<USE YOUR BUCKET NAME>>
+      - zip -r index.zip index.js
+      - aws s3 cp serverless-output.yaml s3://<<USE YOUR BUCKET NAME>>/
+      - aws s3 cp studentswagger.json s3://<<USE YOUR BUCKET NAME>>/
+      - aws s3 cp index.zip s3://<<USE YOUR BUCKET NAME>>/
+  post_build:
+    commands:
+      - aws cloudformation deploy --template-file serverless-output.yaml --stack-name StudentsAppStack-Automated
+      - aws cloudformation wait stack-create-complete --stack-name StudentsAppStack-Automated
