@@ -7,12 +7,12 @@ Resources:
     Properties:
       FunctionName: StudentInfoFunction
       Handler: index.handler
-      Runtime: nodejs4.3
-      CodeUri: s3://<<USE YOUR BUCKET NAME>>/index.zip
+      Runtime: nodejs8.10
+      CodeUri: s3://bharathsdelivion/index.zip
       Description: manage Students table
       MemorySize: 128
       Timeout: 10
-      Role: '<<USE YOUR ROLE NAME>>'
+      Role: 'arn:aws:iam::172586632398:role/LambdaDynamoAccess'
       
   Students:
     Type: AWS::DynamoDB::Table
@@ -33,7 +33,7 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
-      DefinitionUri: s3://<<USE YOUR BUCKET NAME>>/studentswagger.json
+      DefinitionUri: s3://bharathsdelivion/studentswagger.json
 
 
 
